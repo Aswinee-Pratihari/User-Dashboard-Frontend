@@ -5,9 +5,11 @@ import { FaPen } from "react-icons/fa";
 import UserModal from "../components/UserModal";
 
 import { ModalContext } from "../context/ModalState";
+import { UserContext } from "../context/UserState";
 
 const Home = () => {
   const { isOpen, setIsOpen } = useContext(ModalContext);
+  const { setUser } = useContext(UserContext);
   // const [isOpen, setIsOpen] = useState(false);
   const res = useFetchUser();
 
@@ -23,6 +25,7 @@ const Home = () => {
         className="fixed bottom-10 right-10 p-4 rounded-full text-white bg-red-500 shadow-md"
         onClick={() => {
           setIsOpen(true);
+          setUser(null);
         }}
       >
         <FaPen />

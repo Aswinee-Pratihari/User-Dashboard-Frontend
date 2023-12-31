@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { ModalContext } from "../context/ModalState";
 import { UserContext } from "../context/UserState";
+import axios from "axios";
 
 const UserModal = () => {
   const { setIsOpen } = useContext(ModalContext);
@@ -14,10 +15,22 @@ const UserModal = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!user) {
+      const data = await axios.post("http://localhost:3000/users", formData);
 
-    console.log(formData);
+      setUser(data?.data);
+      setIsOpen(false);
+    } else {
+      const data = await axios.put(
+        `http://localhost:3000/users/${user?.id}`,
+        formData
+      );
+
+      setUser(data?.data);
+      setIsOpen(false);
+    }
   };
   return (
     <>

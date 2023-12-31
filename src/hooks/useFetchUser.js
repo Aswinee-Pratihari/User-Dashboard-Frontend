@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { UserContext } from "../context/UserState";
 
 const useFetchUser = () => {
+  const { user } = useContext(UserContext);
   const [data, setData] = useState([]);
   useEffect(() => {
     (async () => {
@@ -13,7 +15,7 @@ const useFetchUser = () => {
         console.error("Error fetching data:", error);
       }
     })();
-  }, []);
+  }, [user]);
   return data;
 };
 
