@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ModalContext } from "../context/ModalState";
+import { UserContext } from "../context/UserState";
 
 const Usercard = ({ user }) => {
+  const { setIsOpen } = useContext(ModalContext);
+  const { setUser } = useContext(UserContext);
   return (
     <tr key={user.id}>
       <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap">
@@ -15,7 +19,10 @@ const Usercard = ({ user }) => {
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
         <button
-          onClick={() => handleEdit(user.id)}
+          onClick={() => {
+            setIsOpen(true);
+            setUser(user);
+          }}
           className="text-blue-500 hover:underline mr-2"
         >
           Edit
