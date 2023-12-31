@@ -6,6 +6,7 @@ import UserModal from "../components/UserModal";
 
 import { ModalContext } from "../context/ModalState";
 import { UserContext } from "../context/UserState";
+import Search from "../components/Search";
 
 const Home = () => {
   const { isOpen, setIsOpen } = useContext(ModalContext);
@@ -15,6 +16,8 @@ const Home = () => {
 
   return (
     <main className="container mx-auto mt-10">
+      <Search />
+
       {res?.length == 0 ? (
         <h1 className="text-center text-xl font-semibold">No Data Found</h1>
       ) : (
