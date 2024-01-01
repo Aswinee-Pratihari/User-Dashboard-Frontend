@@ -1,17 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import Usercard from "./Usercard";
-import Search from "./Search";
 
 const UserTable = ({ users }) => {
-  const handleDelete = (userId) => {
-    setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
-  };
-
-  const handleEdit = (userId) => {
-    // Implement edit functionality
-    console.log("Edit user with ID:", userId);
-  };
-
   return (
     <>
       <div className="max-w-full overflow-x-auto mt-10">
@@ -37,7 +27,7 @@ const UserTable = ({ users }) => {
           </thead>
           <tbody>
             {users.map((user) => (
-              <Usercard user={user} />
+              <Usercard user={user} key={user?._id} />
             ))}
           </tbody>
         </table>

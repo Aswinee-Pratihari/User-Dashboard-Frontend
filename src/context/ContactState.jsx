@@ -32,15 +32,15 @@ export const ContactProvider = ({ children }) => {
     }
   };
 
-  const getAllContacts = async (query) => {
+  const getAllContacts = async (query, sort) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/contacts?query=${query}`,
+        `http://localhost:8000/api/contacts?query=${query}&sort=${sort}`,
         {
           headers: headers,
         }
       );
-      console.log(response);
+
       const json = await response.data;
       // console.log(json);
       return json.contacts;

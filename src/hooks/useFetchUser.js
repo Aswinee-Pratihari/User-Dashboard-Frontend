@@ -6,17 +6,17 @@ import { ContactContext } from "../context/ContactState";
 const useFetchUser = () => {
   const { user } = useContext(UserContext);
   const [data, setData] = useState([]);
-  const { query, setQuery } = useContext(QueryContext);
+  const { query, sort } = useContext(QueryContext);
   const { getAllContacts } = useContext(ContactContext);
+
   useEffect(() => {
     (async () => {
       setTimeout(async () => {
-        const res = await getAllContacts(query);
-        console.log(res);
+        const res = await getAllContacts(query, sort);
         setData(res);
       }, 1000);
     })();
-  }, [user, query]);
+  }, [user, query, sort]);
   return data;
 };
 

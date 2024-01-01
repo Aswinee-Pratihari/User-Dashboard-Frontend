@@ -9,6 +9,7 @@ import { UserContext } from "../context/UserState";
 import Search from "../components/Search";
 import { AuthContext } from "../context/AuthState";
 import { useNavigate } from "react-router-dom";
+import Sort from "../components/Sort";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -19,18 +20,19 @@ const Home = () => {
 
   useEffect(() => {
     if (!loggedInUser) {
-      console.log(loggedInUser);
       navigate("/signIn");
-      console.log(loggedInUser);
     }
   }, []);
-  // const [isOpen, setIsOpen] = useState(false);
+
   const res = useFetchUser();
 
   return (
     <main className="container mx-auto mt-10">
-      <Search />
+      <div className="flex gap-4 items-center ">
+        <Search />
 
+        <Sort />
+      </div>
       {res?.length == 0 ? (
         <h1 className="text-center text-xl font-semibold">No Data Found</h1>
       ) : (
