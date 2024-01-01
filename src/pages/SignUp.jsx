@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthState";
 
 const SignUp = () => {
+  const { register } = useContext(AuthContext);
+
   const states = ["Gujarat", "Maharashtra", "Karnataka"];
   const [suggestions, setSuggestions] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
+    password: "",
     gender: "",
-    hearAbout: ["LinkedIn"],
+    heardAbout: [],
     city: "Mumbai",
     state: "",
   });
@@ -18,11 +22,11 @@ const SignUp = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const handleCheckboxChange = (e) => {
-    let newArray = [...formData.hearAbout, e.target.value];
-    if (formData.hearAbout.includes(e.target.value)) {
+    let newArray = [...formData.heardAbout, e.target.value];
+    if (formData.heardAbout.includes(e.target.value)) {
       newArray = newArray.filter((day) => day !== e.target.value);
     }
-    setFormData({ ...formData, hearAbout: newArray });
+    setFormData({ ...formData, heardAbout: newArray });
   };
 
   const handleSuggestionClick = (suggestion) => {
@@ -33,6 +37,7 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form Data:", formData);
+    register(formData);
   };
 
   return (
@@ -75,6 +80,24 @@ const SignUp = () => {
             id="email"
             name="email"
             value={formData.email}
+            onChange={handleChange}
+            className="mt-1 p-2 w-full border rounded-md"
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-gray-600"
+          >
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={formData.password}
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md"
             required
@@ -153,7 +176,7 @@ const SignUp = () => {
               <input
                 type="checkbox"
                 value="LinkedIn"
-                checked={formData.hearAbout.includes("LinkedIn")}
+                checked={formData.heardAbout.includes("LinkedIn")}
                 onChange={handleCheckboxChange}
                 className="form-checkbox"
               />
@@ -164,7 +187,7 @@ const SignUp = () => {
               <input
                 type="checkbox"
                 value="Friends"
-                checked={formData.hearAbout.includes("Friends")}
+                checked={formData.heardAbout.includes("Friends")}
                 onChange={handleCheckboxChange}
                 className="form-checkbox"
               />
@@ -174,7 +197,7 @@ const SignUp = () => {
               <input
                 type="checkbox"
                 value="Job Portal"
-                checked={formData.hearAbout.includes("Job Portal")}
+                checked={formData.heardAbout.includes("Job Portal")}
                 onChange={handleCheckboxChange}
                 className="form-checkbox"
               />
@@ -185,13 +208,33 @@ const SignUp = () => {
               <input
                 type="checkbox"
                 value="Others"
-                checked={formData.hearAbout.includes("Others")}
+                checked={formData.heardAbout.includes("Others")}
                 onChange={handleCheckboxChange}
                 className="form-checkbox"
               />
               <span className="ml-2">Others</span>
             </label>
           </div>
+        </div>
+
+        <div className="mb-4">
+          <label
+            htmlFor="city"
+            className="block text-sm font-medium text-gray-600"
+          >
+            City
+          </label>
+          <select
+            id="city"
+            name="city"
+            value={formData.city}
+            onChange={handleChange}
+            className="mt-1 p-2 w-full border rounded-md"
+          >
+            <option value="Mumbai">Mumbai</option>
+            <option value="Pune">Pune</option>
+            <option value="Ahmedabad">Ahmedabad</option>
+          </select>
         </div>
 
         <div className="mb-4">
