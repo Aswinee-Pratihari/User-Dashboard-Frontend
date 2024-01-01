@@ -7,10 +7,23 @@ import UserModal from "../components/UserModal";
 import { ModalContext } from "../context/ModalState";
 import { UserContext } from "../context/UserState";
 import Search from "../components/Search";
+import { AuthContext } from "../context/AuthState";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const { isOpen, setIsOpen } = useContext(ModalContext);
   const { setUser } = useContext(UserContext);
+  const { loggedInUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!loggedInUser) {
+      console.log(loggedInUser);
+      navigate("/signIn");
+      console.log(loggedInUser);
+    }
+  }, []);
   // const [isOpen, setIsOpen] = useState(false);
   const res = useFetchUser();
 

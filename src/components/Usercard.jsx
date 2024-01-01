@@ -2,19 +2,19 @@ import React, { useContext } from "react";
 import { ModalContext } from "../context/ModalState";
 import { UserContext } from "../context/UserState";
 import axios from "axios";
+import { ContactContext } from "../context/ContactState";
 
 const Usercard = ({ user }) => {
   const { setIsOpen } = useContext(ModalContext);
   const { setUser } = useContext(UserContext);
-
+  const { deleteContact } = useContext(ContactContext);
   const handleDelete = async (id) => {
-    const data = await axios.delete(`http://localhost:3000/users/${id}`);
-    setUser(data?.data);
+    await deleteContact(id);
   };
   return (
-    <tr key={user.id}>
+    <tr key={user._id}>
       <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap">
-        {user.id}
+        {user._id}
       </td>
       <td className="px-6 py-4 whitespace-nowrap">{user.username}</td>
       <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap">
@@ -34,7 +34,7 @@ const Usercard = ({ user }) => {
           Edit
         </button>
         <button
-          onClick={() => handleDelete(user.id)}
+          onClick={() => handleDelete(user._id)}
           className="text-red-500 hover:underline"
         >
           Delete

@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
+import { ContactContext } from "../context/ContactState";
 import { ModalContext } from "../context/ModalState";
 import { UserContext } from "../context/UserState";
-import axios from "axios";
 
 const UserModal = () => {
   const { setIsOpen } = useContext(ModalContext);
   const { user, setUser } = useContext(UserContext);
+  const { editContact, postContact } = useContext(ContactContext);
   const [formData, setFormData] = useState({
     username: user?.username || "",
     email: user?.email || "",
@@ -17,19 +18,11 @@ const UserModal = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!user) {
-      const data = await axios.post("http://localhost:3000/users", formData);
-
-      setUser(data?.data);
-      setIsOpen(false);
+      await postContact(formData);
     } else {
-      const data = await axios.put(
-        `http://localhost:3000/users/${user?.id}`,
-        formData
-      );
-
-      setUser(data?.data);
-      setIsOpen(false);
+      await editContact(user?._id, formData);
     }
   };
   return (
@@ -51,6 +44,7 @@ const UserModal = () => {
               id="username"
               required
               pattern="[A-Za-z]+"
+              title="No special charecter or space allowed"
               name="username"
               value={formData?.username}
               onChange={handleChange}
@@ -69,6 +63,8 @@ const UserModal = () => {
               type="email"
               id="email"
               name="email"
+              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]}"
+              title="Enter a valid email address"
               value={formData?.email}
               onChange={handleChange}
               required

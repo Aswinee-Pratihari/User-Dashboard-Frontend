@@ -60,6 +60,7 @@ const SignUp = () => {
           <input
             type="text"
             id="name"
+            pattern="[A-Za-z]+"
             name="name"
             value={formData.name}
             onChange={handleChange}

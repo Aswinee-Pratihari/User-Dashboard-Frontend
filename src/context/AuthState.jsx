@@ -29,6 +29,8 @@ export const AuthProvider = ({ children }) => {
         console.log(location.pathname);
         if (location.pathname == "/signIn" || location.pathname == "/signUp") {
           navigate("/", { replace: true });
+        } else {
+          navigate(location.pathname ? location.pathname : "/");
         }
       } else {
         console.log("error", result);
