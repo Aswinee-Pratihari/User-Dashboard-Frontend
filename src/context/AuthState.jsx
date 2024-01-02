@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       const res = await axios.post(
-        "http://localhost:8000/api/register",
+        `${import.meta.env.VITE_BASE_URL}/register`,
         userData
       );
       const result = await res?.data;
