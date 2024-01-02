@@ -14,7 +14,7 @@ const useFetchUser = () => {
       setTimeout(async () => {
         const res = await getAllContacts(query, sort);
         setData(res);
-      }, 1000);
+      }, 600);
     })();
   }, [user, query, sort]);
   return data;

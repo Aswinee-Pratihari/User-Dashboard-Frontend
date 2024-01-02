@@ -19,7 +19,7 @@ export const ContactProvider = ({ children }) => {
   const deleteContact = async (userId) => {
     try {
       const res = await axios.delete(
-        `http://localhost:8000/api/contacts/${userId}`,
+        `${import.meta.env.VITE_BASE_URL}/contacts/${userId}`,
         { headers: headers }
       );
       const result = await res?.data;
@@ -35,7 +35,7 @@ export const ContactProvider = ({ children }) => {
   const getAllContacts = async (query, sort) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/contacts?query=${query}&sort=${sort}`,
+        `${import.meta.env.VITE_BASE_URL}/contacts?query=${query}&sort=${sort}`,
         {
           headers: headers,
         }
@@ -49,10 +49,27 @@ export const ContactProvider = ({ children }) => {
     }
   };
 
+  const getSingleContact = async (id) => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/contacts/${id}`,
+        {
+          headers: headers,
+        }
+      );
+
+      const json = await response.data;
+      // console.log(json);
+      return json;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   const editContact = async (id, formData) => {
     try {
       const response = await axios.put(
-        `http://localhost:8000/api/contacts/${id}`,
+        `${import.meta.env.VITE_BASE_URL}/contacts/${id}`,
         formData,
         {
           headers: headers,
@@ -71,7 +88,7 @@ export const ContactProvider = ({ children }) => {
   const postContact = async (formData) => {
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/contacts`,
+        `${import.meta.env.VITE_BASE_URL}/contacts`,
         formData,
         {
           headers: headers,
@@ -87,7 +104,13 @@ export const ContactProvider = ({ children }) => {
   };
   return (
     <ContactContext.Provider
-      value={{ deleteContact, getAllContacts, editContact, postContact }}
+      value={{
+        deleteContact,
+        getAllContacts,
+        editContact,
+        postContact,
+        getSingleContact,
+      }}
     >
       {children}
     </ContactContext.Provider>

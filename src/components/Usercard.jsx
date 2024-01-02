@@ -1,18 +1,24 @@
 import React, { useContext } from "react";
 import { ModalContext } from "../context/ModalState";
 import { UserContext } from "../context/UserState";
-import axios from "axios";
 import { ContactContext } from "../context/ContactState";
+import { useNavigate } from "react-router-dom";
 
 const Usercard = ({ user }) => {
   const { setIsOpen } = useContext(ModalContext);
   const { setUser } = useContext(UserContext);
   const { deleteContact } = useContext(ContactContext);
+  const navigate = useNavigate();
   const handleDelete = async (id) => {
     await deleteContact(id);
   };
   return (
-    <tr key={user._id}>
+    <tr
+      className="hover:bg-gray-200 cursor-pointer"
+      onClick={() => {
+        navigate(`/user/${user?._id}`);
+      }}
+    >
       <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap">
         {user._id}
       </td>
@@ -25,7 +31,8 @@ const Usercard = ({ user }) => {
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             setIsOpen(true);
             setUser(user);
           }}
@@ -34,7 +41,10 @@ const Usercard = ({ user }) => {
           Edit
         </button>
         <button
-          onClick={() => handleDelete(user._id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleDelete(user._id);
+          }}
           className="text-red-500 hover:underline"
         >
           Delete

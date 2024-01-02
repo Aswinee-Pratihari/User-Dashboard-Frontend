@@ -8,7 +8,9 @@ const Navbar = () => {
   return (
     <nav className="flex justify-between items-center h-20 px-12 shadow-md ">
       <Link to="/">
-        <h2 className="font-semibold text-2xl tracking-wide ">Logo</h2>
+        <h2 className="font-semibold text-2xl tracking-wide text-emerald-700">
+          User Dashboard
+        </h2>
       </Link>
       <>
         {loggedInUser ? (
@@ -30,9 +32,12 @@ const Navbar = () => {
             >
               Sign In
             </Link>
-            <button className="text-gray-900 border-2 border-gray-900 rounded-lg shadow-sm bg-white font-medium px-3 py-2">
+            <Link
+              to="/signUp"
+              className="text-gray-900 border-2 border-gray-900 rounded-lg shadow-sm bg-white font-medium px-3 py-2"
+            >
               Sign Up
-            </button>
+            </Link>
           </div>
         )}
       </>

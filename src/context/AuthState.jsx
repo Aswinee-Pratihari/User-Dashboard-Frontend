@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
 
   const checkLoginuser = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/check", {
+      const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/check`, {
         headers: headers,
       });
       const result = await res?.data;
@@ -42,7 +42,10 @@ export const AuthProvider = ({ children }) => {
   };
   const login = async (userData) => {
     try {
-      const res = await axios.post("http://localhost:8000/api/login", userData);
+      const res = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/login`,
+        userData
+      );
       const result = await res?.data;
       if (result) {
         localStorage.setItem("token", result.token);
